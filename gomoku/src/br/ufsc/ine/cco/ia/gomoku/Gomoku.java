@@ -2,6 +2,7 @@ package br.ufsc.ine.cco.ia.gomoku;
 
 import br.ufsc.ine.cco.ia.gomoku.bussines.Computer;
 import br.ufsc.ine.cco.ia.gomoku.bussines.Jogador;
+import br.ufsc.ine.cco.ia.gomoku.bussines.Movimento;
 import br.ufsc.ine.cco.ia.gomoku.bussines.Tabuleiro;
 
 public class Gomoku {
@@ -35,14 +36,14 @@ public class Gomoku {
 				System.out.println("Ultima jogada não aceita, local já ocupado.");
 			}
 			mov = new Movimento();
-			if (proximo.igual(null)) {
-				Computer.decide(this.tabuleiro, mov);
+			if (proximo == null) {
+				mov = Computer.decide(this.tabuleiro);
 				this.ultimoJogador = this.j2;
 				proximo = this.ultimoJogador;
 			} else {
 				proximo.perguntarJogada(mov);
 			}
-			this.tabuleiro.atualizar(mov, proximo.pegaMarca());
+			this.tabuleiro.atualizar(mov, proximo.pegaMarca(), true);
 		} while (!this.tabuleiro.temVencedor(mov));
 		this.parabenizarVencedor();
 	}
@@ -57,11 +58,4 @@ public class Gomoku {
 		System.out.println("Finalizando o jogo ...");
 	}
 
-	public class Movimento {
-		public int LINHA;
-		public int COLUNA;
-
-		Movimento() {
-		}
-	}
 }

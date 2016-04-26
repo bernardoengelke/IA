@@ -2,8 +2,6 @@ package br.ufsc.ine.cco.ia.gomoku.bussines;
 
 import java.util.Scanner;
 
-import br.ufsc.ine.cco.ia.gomoku.Gomoku.Movimento;
-
 public class Jogador {
 
 	private String nome;

@@ -1,8 +1,7 @@
 package br.ufsc.ine.cco.ia.gomoku.bussines;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import br.ufsc.ine.cco.ia.gomoku.Gomoku.Movimento;
 
 public class VerificadorTabuleiro {
 
@@ -24,13 +23,29 @@ public class VerificadorTabuleiro {
 	}
 
 	public static List<Movimento> pegaListaMovimentos(Tabuleiro tabuleiro) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Movimento> movimentosCandidatos = new ArrayList<Movimento>();
+
+		List<Movimento> jogadas = tabuleiro.pegaJogadas();
+		for (Movimento movimento : jogadas) {
+			for (Movimento vizinho : tabuleiro.pegaVizinhosLivres(movimento)) {
+				boolean add = true;
+				for (Movimento candidato : movimentosCandidatos) {
+					if (candidato.equals(vizinho)) {
+						add = false;
+						break;
+					}
+				}
+				if (add) {
+					movimentosCandidatos.add(vizinho);
+				}
+			}
+		}
+
+		return movimentosCandidatos;
 	}
 
-	public static Object pegaPontuacao(Tabuleiro tabuleiro) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Object pegaPontuacao(Tabuleiro tabuleiro, boolean ehComputador) {
+		return ehComputador ? tabuleiro.pegaPontuacaoMax() - tabuleiro.pegaPontuacaoMin() : tabuleiro.pegaPontuacaoMin() - tabuleiro.pegaPontuacaoMax();
 	}
 
 }
